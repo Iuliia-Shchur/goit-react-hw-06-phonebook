@@ -1,14 +1,14 @@
 import s from "./ContactForm.module.css";
 import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
-import { connect } from "react-redux";
 import actions from "../../redux/actions";
-import ContactList from "../ContactList/ContactList";
-
-function ContactForm({ contacts, formSubmit }) {
+import { useSelector, useDispatch } from "react-redux";
+import { getContacts } from "../../redux/selector";
+function ContactForm() {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   const inputChange = (evt) => {
     switch (evt.target.name) {
@@ -33,7 +33,7 @@ function ContactForm({ contacts, formSubmit }) {
     ) {
       return alert("This contact has already been added to the list");
     }
-    formSubmit(name, number);
+    dispatch(actions.addContacts({ name, number }));
     resetForm();
   };
 
@@ -79,23 +79,8 @@ function ContactForm({ contacts, formSubmit }) {
 ContactForm.propTypes = {
   name: PropTypes.string,
   number: PropTypes.number,
-
-  nameId: PropTypes.number,
-  numberId: PropTypes.number,
-
   handleSubmit: PropTypes.func,
-  formSubmit: PropTypes.func,
   inputChange: PropTypes.func,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    contacts: state.contacts.items,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  formSubmit: (name, number) => dispatch(actions.addContact(name, number)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+export default ContactForm;
