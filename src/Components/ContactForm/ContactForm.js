@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import actions from "../../redux/actions";
 import ContactList from "../ContactList/ContactList";
 
-function ContactForm({ contacts }) {
+function ContactForm({ contacts, formSubmit }) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
@@ -33,7 +33,7 @@ function ContactForm({ contacts }) {
     ) {
       return alert("This contact has already been added to the list");
     }
-
+    formSubmit(name, number);
     resetForm();
   };
 
@@ -90,12 +90,12 @@ ContactForm.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    contacts: state.contacts,
+    contacts: state.contacts.items,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  formSubmit: (contact) => dispatch(actions.addContact(contact)),
+  formSubmit: (name, number) => dispatch(actions.addContact(name, number)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

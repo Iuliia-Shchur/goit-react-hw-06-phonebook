@@ -48,7 +48,7 @@ const handleContacts = (allContacts, filter) => {
 };
 
 const mapStateToProps = (state) => ({
-  getContacts: handleContacts(state.items, state.filter),
+  getContacts: handleContacts(state.contacts.items, state.contacts.filter),
 });
 
 const mapDispatchToProps = (dispatch) => ({
