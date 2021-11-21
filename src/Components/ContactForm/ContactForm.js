@@ -1,9 +1,9 @@
 import s from "./ContactForm.module.css";
-import PropTypes from "prop-types";
+
 import { useState } from "react";
-import actions from "../../redux/actions";
+import actions from "../../redux/contacts/actions";
 import { useSelector, useDispatch } from "react-redux";
-import { getContacts } from "../../redux/selector";
+import { getContacts } from "../../redux/contacts/selector";
 function ContactForm() {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
@@ -75,12 +75,5 @@ function ContactForm() {
     </div>
   );
 }
-
-ContactForm.propTypes = {
-  name: PropTypes.string,
-  number: PropTypes.number,
-  handleSubmit: PropTypes.func,
-  inputChange: PropTypes.func,
-};
 
 export default ContactForm;
